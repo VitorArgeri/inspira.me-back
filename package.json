@@ -1,14 +1,14 @@
 {
-  "name": "animes-api",
+  "name": "inspira.me",
   "version": "1.0.0",
-  "description": "Projeto base de uma API com MVC",
+  "description": "Projeto back-end do inspira.me",
   "keywords": [
     "nodejs",
     "javascript",
     "prisma"
   ],
   "license": "MIT",
-  "author": "Felipe Dev",
+  "author": "Vitor Argeri",
   "type": "module",
   "main": "src/server.js",
   "scripts": {

@@ -17,19 +17,25 @@ class AuthController {
   // Registrar novo usuário
   async register(req, res) {
     try {
-      const { name, email, password } = req.body;
+      const { name, username, email, password, avatarUrl, bio } = req.body;
 
       // Validação básica
-      if (!name || !email || !password) {
+      if (!name || !username || !email || !password ||!avatarUrl || !bio) {
         return res
           .status(400)
-          .json({ error: "Os campos nome, email e senha são obrigatórios!" });
+          .json({ error: "Os campos nome, nome de usuário, email, senha, avatarUrl e bio são obrigatórios!" });
       }
 
       // Verificar se o usuário já existe
-      const userExists = await UserModel.findByEmail(email);
+      const userExistsEmail = await UserModel.findByEmail(email);
       if (userExists) {
         return res.status(400).json({ error: "Este email já está em uso!" });
+      }
+
+        // Verificar se o usuário já existe
+      const userExistsUsername = await UserModel.findByUsername(username);
+      if (userExists) {
+        return res.status(400).json({ error: "Este nome de usuário já está em uso!" });
       }
 
       // Hash da senha
@@ -38,8 +44,11 @@ class AuthController {
       // Criar objeto do usuário
       const data = {
         name,
+        username,
         email,
         password: hashedPassword,
+        avatarUrl,
+        bio,
       };
 
       // Criar usuário
@@ -67,10 +76,11 @@ class AuthController {
       }
 
       // Verificar se o usuário existe
-      const userExists = await UserModel.findByEmail(email);
-      if (!userExists) {
+      const userExistsEmail = await UserModel.findByEmail(email);
+      if (!userExistsEmail) {
         return res.status(401).json({ error: "Credenciais inválidas!" });
       }
+
 
       // Verificar senha
       const isPasswordValid = await bcrypt.compare(
