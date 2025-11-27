@@ -21,4 +21,5 @@ router.use("/registros-categoria", registroCategoriaRouter);
 // Rotas protegidas
 router.use(authMiddleware);
 
+
 export default router;

@@ -20,22 +20,16 @@ class AuthController {
       const { name, username, email, password, avatarUrl, bio } = req.body;
 
       // Validação básica
-      if (!name || !username || !email || !password ||!avatarUrl || !bio) {
+      if (!name || !username || !email || !password || !avatarUrl || !bio) {
         return res
           .status(400)
           .json({ error: "Os campos nome, nome de usuário, email, senha, avatarUrl e bio são obrigatórios!" });
       }
 
       // Verificar se o usuário já existe
-      const userExistsEmail = await UserModel.findByEmail(email);
+      const userExists =  await UserModel.findByEmail(email);
       if (userExists) {
         return res.status(400).json({ error: "Este email já está em uso!" });
-      }
-
-        // Verificar se o usuário já existe
-      const userExistsUsername = await UserModel.findByUsername(username);
-      if (userExists) {
-        return res.status(400).json({ error: "Este nome de usuário já está em uso!" });
       }
 
       // Hash da senha
@@ -85,7 +79,7 @@ class AuthController {
       // Verificar senha
       const isPasswordValid = await bcrypt.compare(
         password,
-        userExists.password
+        userExistsEmail.password
       );
       if (!isPasswordValid) {
         return res.status(401).json({ error: "Credenciais inválidas!" });
@@ -94,9 +88,9 @@ class AuthController {
       // Gerar Token JWT
       const token = jwt.sign(
         {
-          id: userExists.id,
-          name: userExists.name,
-          email: userExists.email,
+          id: userExistsEmail.id,
+          name: userExistsEmail.name,
+          email: userExistsEmail.email,
         },
         process.env.JWT_SECRET,
         {
@@ -107,7 +101,7 @@ class AuthController {
       return res.json({
         message: "Login realizado com sucesso!",
         token,
-        userExists,
+        userExistsEmail,
       });
     } catch (error) {
       console.error("Erro ao fazer login: ", error);

@@ -30,17 +30,6 @@ class UserModel {
     return user;
   }
 
-    // Obter um usuário pelo username
-  async findByUsername(username) {
-    const user = await prisma.user.findUnique({
-      where: {
-        username,
-      },
-    });
-
-    return user;
-  }
-
 
   // Criar um novo usuário
   async create(data) {
