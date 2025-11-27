@@ -2,7 +2,7 @@ import prisma from "../../prisma/prisma.js";
 
 class PostsModel {
     async findAll() {
-        const posts = await prisma.post.findMany({
+        const posts = await prisma.postagem.findMany({
             orderBy: { createdAt: "desc" },
             include: { user: true, likes: true, categories: true },
         });
@@ -10,7 +10,7 @@ class PostsModel {
     }
 
     async findById(id) {
-        const post = await prisma.post.findUnique({
+        const post = await prisma.postagem.findUnique({
             where: { id: Number(id) },
             include: { user: true, likes: true, categories: true },
         });
@@ -18,7 +18,7 @@ class PostsModel {
     }
 
     async create(ownerPost, description, userId, numberLikes, numberShares) {
-        const novo = await prisma.post.create({
+        const novo = await prisma.postagem.create({
             data: { ownerPost, description, userId, numberLikes, numberShares },
         });
         return novo;
@@ -36,7 +36,7 @@ class PostsModel {
         if (numberLikes !== undefined) data.numberLikes = numberLikes;
         if (numberShares !== undefined) data.numberShares = numberShares;        
 
-        const atualizado = await prisma.post.update({
+        const atualizado = await prisma.postagem.update({
             where: { id: Number(id) },
             data,
         });
@@ -46,7 +46,7 @@ class PostsModel {
     async delete(id) {
         const post = await this.findById(id);
         if (!post) return null;
-        await prisma.post.delete({ where: { id: Number(id) } });
+        await prisma.postagem.delete({ where: { id: Number(id) } });
         return true;
     }
 }

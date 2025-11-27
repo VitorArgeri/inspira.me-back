@@ -31,7 +31,7 @@ class PostController {
     async createPost(req, res) {
         try {
             const { ownerPost, description, userId, numberLikes, numberShares } = req.body;
-            if (!ownerPost || !description || userId || !numberLikes || numberShares  === undefined) {
+            if (!ownerPost || !description || !userId || !numberLikes || !numberShares  === undefined) {
                 return res.status(400).json({
                     error: "Os campos 'ownerPost', 'description', 'userId', 'numberLikes' e 'numberShares' são obrigatórios!",
                 });
