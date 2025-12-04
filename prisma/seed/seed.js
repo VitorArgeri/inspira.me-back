@@ -1,19 +1,27 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs"; // Certifique-se de ter bcryptjs instalado
 
 const prisma = new PrismaClient();
 
 async function clearDatabase() {
     console.log("🧹 Limpando o banco de dados...");
-    await prisma.registroCurtida.deleteMany();
-    await prisma.registroCategoria.deleteMany();
-    await prisma.postagem.deleteMany();
-    await prisma.user.deleteMany();
-    await prisma.categoria.deleteMany();
-    console.log("✅ Limpeza concluída.");
+    try {
+        await prisma.registroCurtida.deleteMany();
+        await prisma.registroCategoria.deleteMany();
+        await prisma.postagem.deleteMany();
+        await prisma.user.deleteMany();
+        await prisma.categoria.deleteMany();
+        console.log("✅ Limpeza concluída.");
+    } catch (error) {
+        console.log("⚠️ Banco já estava limpo ou erro ao limpar:", error.message);
+    }
 }
 
 async function main() {
     await clearDatabase();
+
+    // Criar um hash válido para a senha "123456"
+    const passwordHash = await bcrypt.hash("123456", 10);
 
     console.log("\n👤 Criando usuários...");
     const user1 = await prisma.user.create({
@@ -21,7 +29,7 @@ async function main() {
             name: "João Silva",
             username: "joao_s",
             email: "joao.s@exemplo.com",
-            password: "hashed_password1",
+            password: passwordHash, // Senha válida: 123456
             avatarUrl: "https://placehold.co/150x150/0000FF/FFFFFF?text=JS",
             bio: "Entusiasta de tecnologia e ficção científica. Publicando minhas ideias!",
         },
@@ -31,7 +39,7 @@ async function main() {
             name: "Maria Oliveira",
             username: "maria_o",
             email: "maria.o@exemplo.com",
-            password: "hashed_password2",
+            password: passwordHash, // Senha válida: 123456
             avatarUrl: "https://placehold.co/150x150/FF0000/FFFFFF?text=MO",
             bio: "Amante da natureza e da fotografia. Compartilhando meu dia a dia.",
         },
@@ -41,7 +49,7 @@ async function main() {
             name: "Carlos Souza",
             username: "carlos_s",
             email: "carlos.s@exemplo.com",
-            password: "hashed_password3",
+            password: passwordHash, // Senha válida: 123456
             avatarUrl: "https://placehold.co/150x150/00FF00/000000?text=CS",
             bio: "Desenvolvedor full-stack e fã de café.",
         },
@@ -51,7 +59,7 @@ async function main() {
             name: "Ana Costa",
             username: "ana_c",
             email: "ana.c@exemplo.com",
-            password: "hashed_password4",
+            password: passwordHash, // Senha válida: 123456
             avatarUrl: "https://placehold.co/150x150/FFFF00/000000?text=AC",
             bio: "Viajante e criadora de conteúdo sobre culinária.",
         },
@@ -61,7 +69,7 @@ async function main() {
             name: "Pedro Lima",
             username: "pedro_l",
             email: "pedro.l@exemplo.com",
-            password: "hashed_password5",
+            password: passwordHash, // Senha válida: 123456
             avatarUrl: "https://placehold.co/150x150/FF00FF/FFFFFF?text=PL",
             bio: "Músico e produtor. O som move o mundo.",
         },
