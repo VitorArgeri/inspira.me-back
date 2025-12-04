@@ -92,6 +92,7 @@ async function main() {
             userId: user1.id,
             numberLikes: 2,
             numberShares: 0,
+            backgroundColor: "#FFFFFF",
         },
     });
     const post2 = await prisma.postagem.create({
@@ -101,6 +102,7 @@ async function main() {
             userId: user2.id,
             numberLikes: 3,
             numberShares: 1,
+            backgroundColor: "#FF5733",
         },
     });
     const post3 = await prisma.postagem.create({
@@ -110,6 +112,7 @@ async function main() {
             userId: user3.id,
             numberLikes: 1,
             numberShares: 0,
+            backgroundColor: "#33FF57",
         },
     });
     const post4 = await prisma.postagem.create({
@@ -119,6 +122,7 @@ async function main() {
             userId: user4.id,
             numberLikes: 4,
             numberShares: 2,
+            backgroundColor: "#3357FF",
         },
     });
     const post5 = await prisma.postagem.create({
@@ -128,6 +132,7 @@ async function main() {
             userId: user5.id,
             numberLikes: 2,
             numberShares: 0,
+            backgroundColor: "#F333FF",
         },
     });
     const post6 = await prisma.postagem.create({
@@ -137,6 +142,7 @@ async function main() {
             userId: user1.id,
             numberLikes: 0,
             numberShares: 0,
+            backgroundColor: "#33FFF3",
         },
     });
     const post7 = await prisma.postagem.create({
@@ -146,6 +152,7 @@ async function main() {
             userId: user2.id,
             numberLikes: 1,
             numberShares: 0,
+            backgroundColor: "#F3FF33",
         },
     });
     const post8 = await prisma.postagem.create({
@@ -155,6 +162,7 @@ async function main() {
             userId: user3.id,
             numberLikes: 3,
             numberShares: 1,
+            backgroundColor: "#FF3333",
         },
     });
     const post9 = await prisma.postagem.create({
@@ -164,6 +172,7 @@ async function main() {
             userId: user4.id,
             numberLikes: 2,
             numberShares: 0,
+            backgroundColor: "#3333FF",
         },
     });
     const post10 = await prisma.postagem.create({
@@ -173,6 +182,7 @@ async function main() {
             userId: user5.id,
             numberLikes: 1,
             numberShares: 0,
+            backgroundColor: "#33FF33",
         },
     });
     console.log("✅ 10 postagens criadas.");

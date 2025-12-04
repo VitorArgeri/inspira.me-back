@@ -14,17 +14,17 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   name      String
-  username  String   @unique
-  email     String   @unique
+  username  String @unique
+  email     String @unique
   password  String
   avatarUrl String
   bio       String
 
   // Relacionamentos
-  posts     Postagem[]
-  likes     RegistroCurtida[]
+  posts Postagem[]
+  likes RegistroCurtida[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -33,16 +33,17 @@ model User {
 }
 
 model Postagem {
-  id          Int     @id @default(autoincrement())
-  ownerPost String
-  description String
-  userId Int
-  numberLikes Int
-  numberShares Int
+  id              Int    @id @default(autoincrement())
+  ownerPost       String
+  description     String
+  userId          Int
+  numberLikes     Int
+  numberShares    Int
+  backgroundColor String
 
   // Relacionamentos
-  user User @relation(fields: [userId], references: [id])
-  likes RegistroCurtida[]
+  user       User                @relation(fields: [userId], references: [id])
+  likes      RegistroCurtida[]
   categories RegistroCategoria[]
 
   createdAt DateTime @default(now())
@@ -52,13 +53,13 @@ model Postagem {
 }
 
 model RegistroCurtida {
-  id Int @id @default(autoincrement())
+  id     Int @id @default(autoincrement())
   postId Int
   userId Int
 
   post Postagem @relation(fields: [postId], references: [id])
-  user User @relation(fields: [userId], references: [id])
-  
+  user User     @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -66,7 +67,7 @@ model RegistroCurtida {
 }
 
 model Categoria {
-  id Int @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   description String
 
   registrosCategorias RegistroCategoria[]
@@ -78,12 +79,12 @@ model Categoria {
 }
 
 model RegistroCategoria {
-  id Int @id @default(autoincrement())
-  postId Int
+  id         Int    @id @default(autoincrement())
+  postId     Int
   categoryId Int
   background String
 
-  post Postagem @relation(fields: [postId], references: [id])
+  post     Postagem  @relation(fields: [postId], references: [id])
   category Categoria @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime @default(now())
