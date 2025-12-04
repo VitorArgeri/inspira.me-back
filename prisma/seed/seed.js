@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs"; // Certifique-se de ter bcryptjs instalado
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -20,7 +20,6 @@ async function clearDatabase() {
 async function main() {
     await clearDatabase();
 
-    // Criar um hash válido para a senha "123456"
     const passwordHash = await bcrypt.hash("123456", 10);
 
     console.log("\n👤 Criando usuários...");
@@ -29,7 +28,7 @@ async function main() {
             name: "João Silva",
             username: "joao_s",
             email: "joao.s@exemplo.com",
-            password: passwordHash, // Senha válida: 123456
+            password: passwordHash,
             avatarUrl: "https://placehold.co/150x150/0000FF/FFFFFF?text=JS",
             bio: "Entusiasta de tecnologia e ficção científica. Publicando minhas ideias!",
         },
@@ -39,7 +38,7 @@ async function main() {
             name: "Maria Oliveira",
             username: "maria_o",
             email: "maria.o@exemplo.com",
-            password: passwordHash, // Senha válida: 123456
+            password: passwordHash,
             avatarUrl: "https://placehold.co/150x150/FF0000/FFFFFF?text=MO",
             bio: "Amante da natureza e da fotografia. Compartilhando meu dia a dia.",
         },
@@ -49,7 +48,7 @@ async function main() {
             name: "Carlos Souza",
             username: "carlos_s",
             email: "carlos.s@exemplo.com",
-            password: passwordHash, // Senha válida: 123456
+            password: passwordHash,
             avatarUrl: "https://placehold.co/150x150/00FF00/000000?text=CS",
             bio: "Desenvolvedor full-stack e fã de café.",
         },
@@ -59,7 +58,7 @@ async function main() {
             name: "Ana Costa",
             username: "ana_c",
             email: "ana.c@exemplo.com",
-            password: passwordHash, // Senha válida: 123456
+            password: passwordHash,
             avatarUrl: "https://placehold.co/150x150/FFFF00/000000?text=AC",
             bio: "Viajante e criadora de conteúdo sobre culinária.",
         },
@@ -69,7 +68,7 @@ async function main() {
             name: "Pedro Lima",
             username: "pedro_l",
             email: "pedro.l@exemplo.com",
-            password: passwordHash, // Senha válida: 123456
+            password: passwordHash,
             avatarUrl: "https://placehold.co/150x150/FF00FF/FFFFFF?text=PL",
             bio: "Músico e produtor. O som move o mundo.",
         },
@@ -82,9 +81,11 @@ async function main() {
     const catCulinaria = await prisma.categoria.create({ data: { description: "Gastronomia e Receitas" } });
     const catEsportes = await prisma.categoria.create({ data: { description: "Esportes e Fitness" } });
     const catArte = await prisma.categoria.create({ data: { description: "Arte e Cultura" } });
+
     console.log("✅ 5 categorias criadas.");
 
     console.log("\n📰 Criando postagens...");
+    
     const post1 = await prisma.postagem.create({
         data: {
             ownerPost: user1.username,
@@ -92,7 +93,7 @@ async function main() {
             userId: user1.id,
             numberLikes: 2,
             numberShares: 0,
-            backgroundColor: "#FFFFFF",
+            backgroundColor: "#F7FBFC",
         },
     });
     const post2 = await prisma.postagem.create({
@@ -102,7 +103,7 @@ async function main() {
             userId: user2.id,
             numberLikes: 3,
             numberShares: 1,
-            backgroundColor: "#FF5733",
+            backgroundColor: "#D6E6F2",
         },
     });
     const post3 = await prisma.postagem.create({
@@ -112,7 +113,7 @@ async function main() {
             userId: user3.id,
             numberLikes: 1,
             numberShares: 0,
-            backgroundColor: "#33FF57",
+            backgroundColor: "#B9D7EA",
         },
     });
     const post4 = await prisma.postagem.create({
@@ -122,7 +123,7 @@ async function main() {
             userId: user4.id,
             numberLikes: 4,
             numberShares: 2,
-            backgroundColor: "#3357FF",
+            backgroundColor: "#769FCD",
         },
     });
     const post5 = await prisma.postagem.create({
@@ -132,7 +133,7 @@ async function main() {
             userId: user5.id,
             numberLikes: 2,
             numberShares: 0,
-            backgroundColor: "#F333FF",
+            backgroundColor: "#FCF8EC",
         },
     });
     const post6 = await prisma.postagem.create({
@@ -142,7 +143,7 @@ async function main() {
             userId: user1.id,
             numberLikes: 0,
             numberShares: 0,
-            backgroundColor: "#33FFF3",
+            backgroundColor: "#F7FBFC",
         },
     });
     const post7 = await prisma.postagem.create({
@@ -152,7 +153,7 @@ async function main() {
             userId: user2.id,
             numberLikes: 1,
             numberShares: 0,
-            backgroundColor: "#F3FF33",
+            backgroundColor: "#D6E6F2",
         },
     });
     const post8 = await prisma.postagem.create({
@@ -162,7 +163,7 @@ async function main() {
             userId: user3.id,
             numberLikes: 3,
             numberShares: 1,
-            backgroundColor: "#FF3333",
+            backgroundColor: "#B9D7EA",
         },
     });
     const post9 = await prisma.postagem.create({
@@ -172,7 +173,7 @@ async function main() {
             userId: user4.id,
             numberLikes: 2,
             numberShares: 0,
-            backgroundColor: "#3333FF",
+            backgroundColor: "#769FCD",
         },
     });
     const post10 = await prisma.postagem.create({
@@ -182,7 +183,7 @@ async function main() {
             userId: user5.id,
             numberLikes: 1,
             numberShares: 0,
-            backgroundColor: "#33FF33",
+            backgroundColor: "#FCF8EC",
         },
     });
     console.log("✅ 10 postagens criadas.");
@@ -227,22 +228,35 @@ async function main() {
     await prisma.postagem.update({ where: { id: post9.id }, data: { numberLikes: 2 } });
     await prisma.postagem.update({ where: { id: post10.id }, data: { numberLikes: 1 } });
 
-    console.log("✅ 16 registros de curtidas criados e postagens atualizadas.");
+    console.log("✅ Registros de curtidas criados e postagens atualizadas.");
 
-    console.log("\n📂 Criando registros de categorias (Tags)...");
-    await prisma.registroCategoria.create({ data: { postId: post1.id, categoryId: catTecnologia.id, background: "#1a73e8" } });
-    await prisma.registroCategoria.create({ data: { postId: post2.id, categoryId: catViagem.id, background: "#34a853" } });
-    await prisma.registroCategoria.create({ data: { postId: post3.id, categoryId: catTecnologia.id, background: "#1a73e8" } });
-    await prisma.registroCategoria.create({ data: { postId: post4.id, categoryId: catCulinaria.id, background: "#fbbc05" } });
-    await prisma.registroCategoria.create({ data: { postId: post5.id, categoryId: catArte.id, background: "#ea4335" } });
-    await prisma.registroCategoria.create({ data: { postId: post6.id, categoryId: catArte.id, background: "#ea4335" } });
-    await prisma.registroCategoria.create({ data: { postId: post7.id, categoryId: catEsportes.id, background: "#4285f4" } });
-    await prisma.registroCategoria.create({ data: { postId: post8.id, categoryId: catTecnologia.id, background: "#1a73e8" } });
-    await prisma.registroCategoria.create({ data: { postId: post9.id, categoryId: catViagem.id, background: "#34a853" } });
-    await prisma.registroCategoria.create({ data: { postId: post10.id, categoryId: catArte.id, background: "#ea4335" } });
-    console.log("✅ 10 registros de categorias criados.");
+    console.log("\n📂 Criando registros de categorias...");
+    
+    const todosPosts = [post1, post2, post3, post4, post5, post6, post7, post8, post9, post10];
+    
+    const categoriasComCoresHardcoded = [
+        { id: catTecnologia.id, color: "#F7FBFC" },
+        { id: catViagem.id, color: "#D6E6F2" },
+        { id: catCulinaria.id, color: "#B9D7EA" },
+        { id: catEsportes.id, color: "#769FCD" },
+        { id: catArte.id, color: "#FCF8EC" }
+    ];
 
-    console.log("\n🎉 Seed completo! Dados básicos de Social Media criados.");
+    for (let i = 0; i < todosPosts.length; i++) {
+        const post = todosPosts[i];
+        
+        const cat1 = categoriasComCoresHardcoded[(i) % 5];
+        const cat2 = categoriasComCoresHardcoded[(i + 1) % 5];
+        const cat3 = categoriasComCoresHardcoded[(i + 2) % 5];
+
+        await prisma.registroCategoria.create({ data: { postId: post.id, categoryId: cat1.id, background: cat1.color } });
+        await prisma.registroCategoria.create({ data: { postId: post.id, categoryId: cat2.id, background: cat2.color } });
+        await prisma.registroCategoria.create({ data: { postId: post.id, categoryId: cat3.id, background: cat3.color } });
+    }
+
+    console.log(`✅ Registros de categorias criados.`);
+
+    console.log("\n🎉 Seed completo!");
 }
 
 try {
