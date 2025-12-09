@@ -17,15 +17,15 @@ class PostsModel {
         return post;
     }
 
-    async create(ownerPost, description, userId, numberLikes, numberShares) {
+    async create(ownerPost, description, userId, numberLikes, numberShares, backgroundColor) {
         const novo = await prisma.postagem.create({
-            data: { ownerPost, description, userId, numberLikes, numberShares },
+            data: { ownerPost, description, userId, numberLikes, numberShares, backgroundColor },
         });
         return novo;
     }
 
 
-    async update(id, ownerPost, description, userId, numberLikes, numberShares) {
+    async update(id, ownerPost, description, userId, numberLikes, numberShares, backgroundColor) {
         const post = await this.findById(id);
         if (!post) return null;
 
@@ -34,7 +34,8 @@ class PostsModel {
         if (description !== undefined) data.description = description;
         if (userId !== undefined) data.userId = userId;
         if (numberLikes !== undefined) data.numberLikes = numberLikes;
-        if (numberShares !== undefined) data.numberShares = numberShares;        
+        if (numberShares !== undefined) data.numberShares = numberShares;
+        if (backgroundColor !== undefined) data.backgroundColor = backgroundColor;
 
         const atualizado = await prisma.postagem.update({
             where: { id: Number(id) },

@@ -30,14 +30,14 @@ class PostController {
     // POST /api/posts
     async createPost(req, res) {
         try {
-            const { ownerPost, description, userId, numberLikes, numberShares } = req.body;
-            if (!ownerPost || !description || !userId || !numberLikes || !numberShares  === undefined) {
+            const { ownerPost, description, userId, numberLikes, numberShares, backgroundColor } = req.body;
+            if (!ownerPost || !description || !userId || !numberLikes || !numberShares || !backgroundColor  === undefined) {
                 return res.status(400).json({
-                    error: "Os campos 'ownerPost', 'description', 'userId', 'numberLikes' e 'numberShares' são obrigatórios!",
+                    error: "Os campos 'ownerPost', 'description', 'userId', 'numberLikes', 'numberShares' e 'backgroundColor' são obrigatórios!",
                 });
             }
 
-            const novo = await PostsModel.create(ownerPost, description, userId, numberLikes, numberShares);
+            const novo = await PostsModel.create(ownerPost, description, userId, numberLikes, numberShares, backgroundColor);
             if (!novo) {
                 return res.status(400).json({ error: "Erro ao criar post" });
             }
@@ -52,8 +52,8 @@ class PostController {
     async updatePost(req, res) {
         try {
             const { id } = req.params;
-            const { ownerPost, description, userId, numberLikes, numberShares } = req.body;
-            const atualizado = await PostsModel.update(id, ownerPost, description, userId, numberLikes, numberShares);
+            const { ownerPost, description, userId, numberLikes, numberShares, backgroundColor } = req.body;
+            const atualizado = await PostsModel.update(id, ownerPost, description, userId, numberLikes, numberShares, backgroundColor);
             if (!atualizado) {
                 return res.status(404).json({ error: "Post não encontrado" });
             }
