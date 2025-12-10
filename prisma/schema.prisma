@@ -37,8 +37,8 @@ model Postagem {
   ownerPost       String
   description     String
   userId          Int
-  numberLikes     Int
-  numberShares    Int
+  numberLikes     Int @default(0)
+  numberShares    Int  @default(0)
   backgroundColor String
 
   // Relacionamentos
