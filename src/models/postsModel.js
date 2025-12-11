@@ -47,7 +47,14 @@ class PostsModel {
     async delete(id) {
         const post = await this.findById(id);
         if (!post) return null;
-        await prisma.postagem.delete({ where: { id: Number(id) } });
+        const postId = Number(id);
+
+        await prisma.$transaction(async (tx) => {
+            // Remove dependências antes de excluir o post e evitar P2003
+            await tx.registroCurtida.deleteMany({ where: { postId } });
+            await tx.registroCategoria.deleteMany({ where: { postId } });
+            await tx.postagem.delete({ where: { id: postId } });
+        });
         return true;
     }
 }
